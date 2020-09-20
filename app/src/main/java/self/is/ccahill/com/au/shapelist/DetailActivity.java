@@ -25,7 +25,17 @@ public class DetailActivity extends AppCompatActivity
     {
         Intent previousIntent = getIntent();
         String parsedStringID = previousIntent.getStringExtra("id");
-        selectedShape = MainActivity.shapeList.get(Integer.valueOf(parsedStringID));
+        selectedShape = getParsedShape(parsedStringID);
+    }
+
+    private Shape getParsedShape(String parsedID)
+    {
+        for (Shape shape : MainActivity.shapeList)
+        {
+            if(shape.getId().equals(parsedID))
+                return shape;
+        }
+        return null;
     }
 
     private void setValues()
@@ -33,7 +43,7 @@ public class DetailActivity extends AppCompatActivity
         TextView tv = (TextView) findViewById(R.id.shapeName);
         ImageView iv = (ImageView) findViewById(R.id.shapeImage);
 
-        tv.setText(selectedShape.getName());
+        tv.setText(selectedShape.getId() + " - " + selectedShape.getName());
         iv.setImageResource(selectedShape.getImage());
     }
 }

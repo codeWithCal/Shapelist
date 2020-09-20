@@ -8,17 +8,60 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkerGray">
+
+        <Button
+            android:id="@+id/sortButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="showSortTapped"
+            android:text="SORT"
+            android:textColor="@color/red"
+            android:textSize="30sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp" />
+
+
+        <Button
+            android:id="@+id/filterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:onClick="showFilterTapped"
+            android:text="FILTER"
+            android:textColor="@color/red"
+            android:textSize="30sp" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/shapeListSearchView"
         android:iconifiedByDefault="false"
+        android:background="@color/darkerGray"
         android:queryHint="Shape Name"></SearchView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/filterTabsLayout">
 
         <Button
             android:layout_width="0dp"
@@ -26,7 +69,7 @@
             android:layout_height="match_parent"
             android:text="All"
             android:id="@+id/allFilter"
-            android:background="@color/colorPrimary"
+            android:background="@color/darkerGray"
             android:onClick="allFilterTapped"/>
 
         <Button
@@ -35,7 +78,7 @@
             android:layout_height="match_parent"
             android:text="Triangle"
             android:id="@+id/triangleFilter"
-            android:background="@color/colorPrimary"
+            android:background="@color/darkerGray"
             android:onClick="triangleFilterTapped"/>
 
         <Button
@@ -44,7 +87,7 @@
             android:layout_height="match_parent"
             android:text="Square"
             android:id="@+id/squareFilter"
-            android:background="@color/colorPrimary"
+            android:background="@color/darkerGray"
             android:onClick="squareFilterTapped"/>
 
     </LinearLayout>
@@ -52,14 +95,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/filterTabsLayout2">
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="Octagon"
             android:id="@+id/octagonFilter"
-            android:background="@color/colorPrimary"
+            android:background="@color/darkerGray"
             android:onClick="octagonFilterTapped"/>
 
         <Button
@@ -68,7 +112,7 @@
             android:layout_height="match_parent"
             android:text="Rectangle"
             android:id="@+id/rectangleFilter"
-            android:background="@color/colorPrimary"
+            android:background="@color/darkerGray"
             android:onClick="rectangleFilterTapped"/>
 
         <Button
@@ -77,8 +121,48 @@
             android:layout_height="match_parent"
             android:text="Circle"
             android:id="@+id/circleFilter"
-            android:background="@color/colorPrimary"
+            android:background="@color/darkerGray"
             android:onClick="circleFilterTapped"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/sortTabsLayout2">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="ID ASC"
+            android:background="@color/darkerGray"
+            android:onClick="idASCTapped"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="ID DESC"
+            android:background="@color/darkerGray"
+            android:onClick="idDESCTapped"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="NAME ASC"
+            android:background="@color/darkerGray"
+            android:onClick="nameASCTapped"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="NAME DESC"
+            android:background="@color/darkerGray"
+            android:onClick="nameDESCTapped"/>
 
     </LinearLayout>
 

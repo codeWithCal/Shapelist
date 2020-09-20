@@ -34,7 +34,7 @@ public class ShapeAdapter extends ArrayAdapter<Shape>
         TextView tv = (TextView) convertView.findViewById(R.id.shapeName);
         ImageView iv = (ImageView) convertView.findViewById(R.id.shapeImage);
 
-        tv.setText(shape.getName());
+        tv.setText(shape.getId() + " - " + shape.getName());
         iv.setImageResource(shape.getImage());
 
 
