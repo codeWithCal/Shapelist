@@ -1,6 +1,7 @@
 package self.is.ccahill.com.au.shapelist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,10 +30,14 @@ public class MainActivity extends AppCompatActivity
     boolean sortHidden = true;
     boolean filterHidden = true;
 
+    private Button circleButton, squareButton, rectangleButton, triangleButton, octagonButton, allButton;
+    private Button idAscButton, idDescButton, nameAscButton, nameDescButton;
 
-    private String selectedFilter = "all";
+    private ArrayList<String> selectedFilters = new ArrayList<String>();
     private String currentSearchText = "";
     private SearchView searchView;
+
+    private int white, darkGray, red;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,6 +52,48 @@ public class MainActivity extends AppCompatActivity
         setUpOnclickListener();
         hideFilter();
         hideSort();
+        initColors();
+        lookSelected(idAscButton);
+        lookSelected(allButton);
+        selectedFilters.add("all");
+    }
+
+    private void initColors()
+    {
+        white = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
+        red = ContextCompat.getColor(getApplicationContext(), R.color.red);
+        darkGray = ContextCompat.getColor(getApplicationContext(), R.color.darkerGray);
+    }
+
+
+    private void unSelectAllSortButtons()
+    {
+        lookUnSelected(idAscButton);
+        lookUnSelected(idDescButton);
+        lookUnSelected(nameAscButton);
+        lookUnSelected(nameDescButton);
+    }
+
+    private void unSelectAllFilterButtons()
+    {
+        lookUnSelected(allButton);
+        lookUnSelected(circleButton);
+        lookUnSelected(rectangleButton);
+        lookUnSelected(octagonButton);
+        lookUnSelected(triangleButton);
+        lookUnSelected(squareButton);
+    }
+
+    private void lookSelected(Button parsedButton)
+    {
+        parsedButton.setTextColor(white);
+        parsedButton.setBackgroundColor(red);
+    }
+
+    private void lookUnSelected(Button parsedButton)
+    {
+        parsedButton.setTextColor(red);
+        parsedButton.setBackgroundColor(darkGray);
     }
 
     private void initWidgets()
@@ -56,6 +103,18 @@ public class MainActivity extends AppCompatActivity
         filterView1 = (LinearLayout) findViewById(R.id.filterTabsLayout);
         filterView2 = (LinearLayout) findViewById(R.id.filterTabsLayout2);
         sortView = (LinearLayout) findViewById(R.id.sortTabsLayout2);
+
+        circleButton = (Button) findViewById(R.id.circleFilter);
+        squareButton = (Button) findViewById(R.id.squareFilter);
+        rectangleButton = (Button) findViewById(R.id.rectangleFilter);
+        triangleButton  = (Button) findViewById(R.id.triangleFilter);
+        octagonButton  = (Button) findViewById(R.id.octagonFilter);
+        allButton  = (Button) findViewById(R.id.allFilter);
+
+        idAscButton  = (Button) findViewById(R.id.idAsc);
+        idDescButton  = (Button) findViewById(R.id.idDesc);
+        nameAscButton  = (Button) findViewById(R.id.nameAsc);
+        nameDescButton  = (Button) findViewById(R.id.nameDesc);
     }
 
     private void initSearchWidgets()
@@ -78,15 +137,18 @@ public class MainActivity extends AppCompatActivity
                 {
                     if(shape.getName().toLowerCase().contains(s.toLowerCase()))
                     {
-                        if(selectedFilter.equals("all"))
+                        if(selectedFilters.contains("all"))
                         {
                             filteredShapes.add(shape);
                         }
                         else
                             {
-                                if(shape.getName().toLowerCase().contains(selectedFilter))
+                                for(String filter: selectedFilters)
                                 {
-                                    filteredShapes.add(shape);
+                                    if (shape.getName().toLowerCase().contains(filter))
+                                    {
+                                        filteredShapes.add(shape);
+                                    }
                                 }
                             }
                     }
@@ -157,25 +219,29 @@ public class MainActivity extends AppCompatActivity
 
     private void filterList(String status)
     {
-        selectedFilter = status;
+        if(status != null && !selectedFilters.contains(status))
+            selectedFilters.add(status);
 
         ArrayList<Shape> filteredShapes = new ArrayList<Shape>();
 
         for(Shape shape: shapeList)
         {
-            if(shape.getName().toLowerCase().contains(status))
+            for(String filter: selectedFilters)
             {
-                if(currentSearchText == "")
+                if(shape.getName().toLowerCase().contains(filter))
                 {
-                    filteredShapes.add(shape);
-                }
-                else
+                    if(currentSearchText == "")
                     {
-                        if(shape.getName().toLowerCase().contains(currentSearchText.toLowerCase()))
-                        {
-                            filteredShapes.add(shape);
-                        }
+                        filteredShapes.add(shape);
                     }
+                    else
+                        {
+                            if(shape.getName().toLowerCase().contains(currentSearchText.toLowerCase()))
+                            {
+                                filteredShapes.add(shape);
+                            }
+                        }
+                }
             }
         }
 
@@ -187,7 +253,11 @@ public class MainActivity extends AppCompatActivity
 
     public void allFilterTapped(View view)
     {
-        selectedFilter = "all";
+        selectedFilters.clear();
+        selectedFilters.add("all");
+
+        unSelectAllFilterButtons();
+        lookSelected(allButton);
 
         setAdapter(shapeList);
     }
@@ -195,26 +265,36 @@ public class MainActivity extends AppCompatActivity
     public void triangleFilterTapped(View view)
     {
         filterList("triangle");
+        lookSelected(triangleButton);
+        lookUnSelected(allButton);
     }
 
     public void squareFilterTapped(View view)
     {
         filterList("square");
+        lookSelected(squareButton);
+        lookUnSelected(allButton);
     }
 
     public void octagonFilterTapped(View view)
     {
         filterList("octagon");
+        lookSelected(octagonButton);
+        lookUnSelected(allButton);
     }
 
     public void rectangleFilterTapped(View view)
     {
         filterList("rectangle");
+        lookSelected(rectangleButton);
+        lookUnSelected(allButton);
     }
 
     public void circleFilterTapped(View view)
     {
         filterList("circle");
+        lookSelected(circleButton);
+        lookUnSelected(allButton);
     }
 
 
@@ -280,6 +360,8 @@ public class MainActivity extends AppCompatActivity
     {
         Collections.sort(shapeList, Shape.idAscending);
         checkForFilter();
+        unSelectAllSortButtons();
+        lookSelected(idAscButton);
     }
 
     public void idDESCTapped(View view)
@@ -287,12 +369,16 @@ public class MainActivity extends AppCompatActivity
         Collections.sort(shapeList, Shape.idAscending);
         Collections.reverse(shapeList);
         checkForFilter();
+        unSelectAllSortButtons();
+        lookSelected(idDescButton);
     }
 
     public void nameASCTapped(View view)
     {
         Collections.sort(shapeList, Shape.nameAscending);
         checkForFilter();
+        unSelectAllSortButtons();
+        lookSelected(nameAscButton);
     }
 
     public void nameDESCTapped(View view)
@@ -300,11 +386,13 @@ public class MainActivity extends AppCompatActivity
         Collections.sort(shapeList, Shape.nameAscending);
         Collections.reverse(shapeList);
         checkForFilter();
+        unSelectAllSortButtons();
+        lookSelected(nameDescButton);
     }
 
     private void checkForFilter()
     {
-        if(selectedFilter.equals("all"))
+        if(selectedFilters.contains("all"))
         {
             if(currentSearchText.equals(""))
             {
@@ -325,7 +413,7 @@ public class MainActivity extends AppCompatActivity
         }
         else
             {
-                filterList(selectedFilter);
+                filterList(null);
             }
     }
 

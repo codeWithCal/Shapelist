@@ -69,6 +69,7 @@
             android:layout_height="match_parent"
             android:text="All"
             android:id="@+id/allFilter"
+            android:textColor="@color/red"
             android:background="@color/darkerGray"
             android:onClick="allFilterTapped"/>
 
@@ -77,6 +78,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="Triangle"
+            android:textColor="@color/red"
             android:id="@+id/triangleFilter"
             android:background="@color/darkerGray"
             android:onClick="triangleFilterTapped"/>
@@ -86,6 +88,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="Square"
+            android:textColor="@color/red"
             android:id="@+id/squareFilter"
             android:background="@color/darkerGray"
             android:onClick="squareFilterTapped"/>
@@ -137,6 +140,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="ID ASC"
+            android:id="@+id/idAsc"
             android:background="@color/darkerGray"
             android:onClick="idASCTapped"/>
 
@@ -145,6 +149,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="ID DESC"
+            android:id="@+id/idDesc"
             android:background="@color/darkerGray"
             android:onClick="idDESCTapped"/>
 
@@ -153,6 +158,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="NAME ASC"
+            android:id="@+id/nameAsc"
             android:background="@color/darkerGray"
             android:onClick="nameASCTapped"/>
 
@@ -161,6 +167,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="NAME DESC"
+            android:id="@+id/nameDesc"
             android:background="@color/darkerGray"
             android:onClick="nameDESCTapped"/>
 
